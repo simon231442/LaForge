@@ -1,0 +1,32 @@
+
+	___________________
+	|				  |
+	}---> LAFORGE <---{
+	|				  |
+	/////////\\\\\\\\\\
+
+### USAGE ###
+j'inscrit le nom du projet et ca log un start : user d'alias pour chaque projet -> appelle d'un script dans le zsh -> export $project = project_name
+	-> git pull
+	-> une serie d'alias se mette en fonction, stop, help, note, flush, secondaire : best,
+	-> un log start
+	-> dans le prompte apparait le projet en cours avec une lumiere verte
+	-> repertoir courant devient celui du projet
+stop
+	-> log un stop
+	-> montre les fichier ajouter au commit
+confirmation demandee : yes ?
+	|		|
+	|		no 
+	|		->message "call stop when you ready"
+	|		->annulation du log
+	|
+	yes 
+	-> ask message : l'ideal serait que la commande s'edite dans le terminal
+	-> git push
+	-> variable project_name supprimee
+
+status
+
+python cly.py start nom_duprojet
+nom_duprojet =

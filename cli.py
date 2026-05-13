@@ -5,22 +5,27 @@ from datetime import datetime
 from pathlib import Path
 from typing	import TextIO
 import sys
+import json
 
 def now_str() -> str:
-	return datetime.now.strf("%Y-%m-%d %H:%M:%S");
+	return datetime.now().strftime("%Y-%m-%d %H:%M:%S");
 	
 def load_config() -> dict:
-	config_path = Path(__file__) / "LaForge.config.json"
+	config_path = Path(__file__).parent / "LaForge.config.json"
+	print(f"{config_path}")
 	if not config_path.exists():
-		raise FileNotFounError(f"Confi not found: {config_path}")
+		raise FileNotFoundError(f"Confi not found: {config_path}")
 	with config_path.open("r", encoding="utf-8") as f:
 		return json.load(f)
 
 def log_file_a_open(project_name: str) -> TextIO:
 	cfg = load_config()
-	log_path = cfg["log_path"]
+	log_path = Path(cfg[project_name + "_log_path"])
 	return log_path.open("a", encoding="utf-8")
 	
+def cmd_stop(project_name: str) -> int:
+	with log_file_a_open(project_name) as f:
+		f.write(f"stop  [{now_str()}]\n")
 
 def cmd_start(project_name: str) -> int:
 	with log_file_a_open(project_name) as f:
@@ -37,6 +42,8 @@ def main() -> int:
 	project_name = sys.argv[2]
 	if command == "start":
 		return cmd_start(project_name)
+	if command == "stop":
+		return cmd_stop(project_name)
 	print_usage()
 	return 1
 
