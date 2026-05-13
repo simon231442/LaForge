@@ -1,3 +1,5 @@
 [2026-05-11 18:02:40] note + nom du projet -> log un commentaire
 [2026-05-11 18:05:53] LaForge u -> annule la derniere entre
 [2026-05-11 18:07:44] LaForge +4 -> ajoute une pause de 5min
+[2026-05-13 15:32:18] j'inscrit le nom du projet et ca log un start : user d'alias pour chaque projet -> appelle d'un script dans le zsh -> export  = project_name
+[2026-05-13 16:29:46] optimisation de l'ux | ajout d'action dans start et stop | baniere la forge

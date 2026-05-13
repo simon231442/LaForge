@@ -6,7 +6,8 @@
 	/////////\\\\\\\\\\
 
 ### USAGE ###
-j'inscrit le nom du projet et ca log un start : user d'alias pour chaque projet -> appelle d'un script dans le zsh -> export $project = project_name
+j'inscrit le nom du projet et ca log un start 
+	-> maintenant il suffit de mettre l'argument commande pour que l'operation se fasse au bon endroit
 	-> git pull
 	-> une serie d'alias se mette en fonction, stop, help, note, flush, secondaire : best,
 	-> un log start
