@@ -6,23 +6,30 @@ from pathlib import Path
 from typing	import TextIO
 import sys
 import json
+import os
 
 def now_str() -> str:
 	return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 	
-def load_config() -> dict:
-	config_path = Path(__file__).parent / "LaForge.config.json"
-	if not config_path.exists():
-		raise FileNotFoundError(f"Config not found: {config_path}")
-	with config_path.open("r", encoding="utf-8") as f:
-		return json.load(f)
+#def load_config() -> dict:
+#	project_path = os.environ.get("laforge_project_path")
+#	if not project_path:
+#		raise ValueError("Variable d'environnement 'laforge_project_path' non définie")
+#	config_path = Path(project_path) / "LaForge.config.json"
+#	if not config_path.exists():
+#		raise FileNotFoundError(f"Config not found: {config_path}")
+#	with config_path.open("r", encoding="utf-8") as f:
+#		return json.load(f)
 
 def log_file_a_open(project_name: str) -> TextIO:
-	cfg = load_config()
-	log_key = f"{project_name}_log_path"
-	if log_key not in cfg:
-		raise KeyError(f"La clé '{log_key}' est introuvable dans la configuration.")
-	log_path = Path(cfg[log_key])
+#	cfg = load_config()
+#	log_key = f"{project_name}_log_path"
+#	if log_key not in cfg:
+#		raise KeyError(f"La clé '{log_key}' est introuvable dans la configuration.")
+	project_path = os.environ.get("laforge_project_path")
+	if not project_path:
+		raise ValueError("Variable d'environnement 'laforge_project_path' non définie")
+	log_path = Path(project_path + "log/log_{project_name}.txt")
 	return log_path.open("a", encoding="utf-8")
 	
 def cmd_stop(project_name: str) -> int:
@@ -36,14 +43,16 @@ def cmd_start(project_name: str) -> int:
 	return 0
 
 def print_usage() -> None:
-	print("Usage: laforge <nom_projet> <start|stop>")
+	print("Usage: python cli.py <start|stop>")
 
 def main() -> int:
-	if len(sys.argv) != 3:
+	if len(sys.argv) != 2:
 		print_usage()
 		return 1
-	project_name = sys.argv[1]
-	command = sys.argv[2]
+	project_name = os.environ.get("laforge_project_name")
+	if not project_name:
+		raise ValueError("Variable d'environnement 'laforge_project_name' non définie")
+	command = sys.argv[1]
 	if command == "start":
 		return cmd_start(project_name)
 	if command == "stop":
