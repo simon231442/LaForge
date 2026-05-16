@@ -11,29 +11,36 @@ import sys
 import os
 import subprocess
 import readline
+from dataclasses import dataclass
 from pathlib import Path
 from typing import TextIO
 from datetime import datetime
 
 
-def log_file_a_open(project_name: str) -> TextIO:
+@dataclass
+class LaForgeConfig:
+	"""Configuration et contexte pour les opérations LaForge."""
+	command: str
+	project_name: str
+	project_path: str
+
+
+def log_file_a_open(config: LaForgeConfig) -> TextIO:
 	"""
 	Ouvre le fichier de log d'un projet en mode ajout.
 	
 	Args:
-		project_name: Nom du projet pour lequel ouvrir le fichier de log.
+		config: Configuration LaForge contenant le projet et le chemin.
 		
 	Returns:
 		Un objet fichier ouvert en mode ajout (append).
 		
 	Raises:
-		ValueError: Si la variable d'environnement 'laforge_project_path'
-					n'est pas définie.
+		ValueError: Si le project_path n'est pas défini.
 	"""
-	project_path = os.environ.get("laforge_project_path")
-	if not project_path:
-		raise ValueError("variable d'environnement laforge_project_path non-definie")
-	log_file_path = Path(project_path) / "log" / f"log_{project_name}.txt"
+	if not config.project_path:
+		raise ValueError("project_path n'est pas défini")
+	log_file_path = Path(config.project_path) / "log" / f"log_{config.project_name}.txt"
 	return log_file_path.open("a", encoding="utf-8")
 
 
@@ -66,7 +73,7 @@ def run_interactive_test_command(default_cmd: str = "ls") -> None:
 	subprocess.run(cmd_to_run, shell=True, check=False)
 
 
-def cmd_start(project_name: str) -> None:
+def cmd_start(config: LaForgeConfig) -> None:
 	"""
 	Enregistre le démarrage d'une session pour un projet.
 	
@@ -74,14 +81,14 @@ def cmd_start(project_name: str) -> None:
 	du projet spécifié.
 	
 	Args:
-		project_name: Nom du projet dont on démarre la session.
+		config: Configuration LaForge contenant les informations du projet.
 	"""
 	run_interactive_test_command("git pull")
-	with log_file_a_open(project_name) as f:
+	with log_file_a_open(config) as f:
 		f.write(f"start [{now_str()}]\n")
 
 
-def cmd_stop(project_name: str) -> None:
+def cmd_stop(config: LaForgeConfig) -> None:
 	"""
 	Enregistre l'arrêt d'une session pour un projet.
 	
@@ -89,9 +96,9 @@ def cmd_stop(project_name: str) -> None:
 	du projet spécifié.
 	
 	Args:
-		project_name: Nom du projet dont on arrête la session.
+		config: Configuration LaForge contenant les informations du projet.
 	"""
-	with log_file_a_open(project_name) as f:
+	with log_file_a_open(config) as f:
 		f.write(f"stop  [{now_str()}]\n")
 	run_interactive_test_command("git status") # faudra proposer d'iterrompre stop
 	run_interactive_test_command("git add .") # faudra proposer d'iterrompre stop
@@ -119,23 +126,27 @@ def main() -> int:
 		Code de retour: 0 en cas de succès, 1 en cas d'erreur.
 		
 	Raises:
-		ValueError: Si la variable d'environnement 'laforge_project_name'
-					n'est pas définie.
+		ValueError: Si les variables d'environnement requises ne sont pas définies.
 	"""
 	if len(sys.argv) != 2:
 		print_usage()
 		return 1
 	
 	project_name = os.environ.get("laforge_project_name")
-	print(project_name)
 	if not project_name:
 		raise ValueError("variable d'environnement laforge_project_name non-defini")
 	
+	project_path = os.environ.get("laforge_project_path")
+	if not project_path:
+		raise ValueError("variable d'environnement laforge_project_path non-definie")
+	
 	command = sys.argv[1]
-	if command == "start":
-		cmd_start(project_name)
-	elif command == "stop":
-		cmd_stop(project_name)
+	config = LaForgeConfig(command=command, project_name=project_name, project_path=project_path)
+	
+	if config.command == "start":
+		cmd_start(config)
+	elif config.command == "stop":
+		cmd_stop(config)
 	else:
 		print_usage()
 		return 1
