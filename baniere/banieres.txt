@@ -39,6 +39,14 @@ Proposition 5 (Style industriel / mécanique) :
  [=========================================]
  */
 
+Proposition S (originel) :
+/*
+ ,~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~,
+  >>           ~ L A F O R G E ~         <<
+ '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+ */
+
+
 Proposition 6 (Inspiration Forge avec des contours arrondis) :
 /*
     .-------------------------------.
