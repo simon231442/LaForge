@@ -31,3 +31,31 @@ status
 
 python cly.py start nom_duprojet
 nom_duprojet =
+
+### fait ###
+-->bouton start avec git pull provisoire
+-->bouton stop avec git push provisoire
+-->recuperation des variable d'environnement
+		faire un bouton status <---
+		modifier le prompt zsh pour montrer qu'une session est active<---
+		faire un fichier de config pour personaliser les fonctions<---
+
+-->.zshrc
+	-->fonction portant le non du projet
+		-->cd dans le repos
+		-->export de 2 variables:laforge_project_name et laforge_project_path
+		-->source : laforge.sh qui est dans le repps
+			--->laforge.sh
+				--->fct stop
+					--->appel du cli avec stop comme argument
+					--->annulation da la fonction stop
+	auto edit dans zsh<---
+	transformer la fonction en alias qui qui cd dans le repo projet<---
+
+CPP09() {
+  cd "$HOME/allRepos/CPP09" || return
+  export laforge_project_path="$HOME/allRepos/CPP09"
+  export laforge_project_name="CPP09"
+  source "$HOME/allRepos/LaForge/laforge.sh"
+  python3 $HOME/allRepos/LaForge/cli_copy.py start
+}
