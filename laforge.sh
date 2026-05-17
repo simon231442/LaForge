@@ -1,5 +1,5 @@
 stop() {
-	python3 $HOME/allRepos/LaForge/cli_copy.py stop
+	python3 $laforge_cli_location/cli_copy.py stop
 	unfunction stop 2>/dev/null
 }
 
