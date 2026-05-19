@@ -5,3 +5,7 @@
 [2026-05-13 16:29:46] optimisation de l'ux | ajout d'action dans start et stop | baniere la forge
 [2026-05-14 21:47:56] wokatime
 [2026-05-16 21:05:43] mettre la gestion de ctrl-c dans le man
+[2026-05-19 19:16:21] faire en sorte de conserver les alias mais en ouvrant un autre terminal
+[2026-05-19 19:25:37] STATUS qui affiche le temps ecoule le num session, le temps total passer sur le projet le num de session toal,les inofo git status
+[2026-05-19 19:38:45] GIT possibilite d'annuler la procedure mais en executant le reste
+[2026-05-19 19:41:32] SYNC enclenche la procedure pour synchoniser
