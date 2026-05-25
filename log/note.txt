@@ -9,3 +9,4 @@
 [2026-05-19 19:25:37] STATUS qui affiche le temps ecoule le num session, le temps total passer sur le projet le num de session toal,les inofo git status
 [2026-05-19 19:38:45] GIT possibilite d'annuler la procedure mais en executant le reste
 [2026-05-19 19:41:32] SYNC enclenche la procedure pour synchoniser
+[2026-05-25 19:58:38] si commande vide dans le prompt ne rien executer
